@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Rookie";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Rookies Index</h1>
+
+    <div
+        class="mb-3 d-flex flex-column justify-content-start align-items-start ">
+        <a class="btn btn-primary mb-2" asp-controller="Rookies"
+            asp-action="Persons">Get all persons</a>
+
+        <a class="btn btn-primary mb-2" asp-controller="Rookies"
+            asp-action="Males">Get all males</a>
+
+        <a class="btn btn-primary mb-2" asp-controller="Rookies"
+            asp-action="Oldest">Get the oldest person</a>
+
+        <a class="btn btn-primary mb-2" asp-controller="Rookies"
+            asp-action="FullNames">Get all persons
+            fullname</a>
+        <a class="btn btn-primary mb-2" asp-controller="Rookies"
+            asp-action="AroundYear">Get list of people who was born in specific
+            year</a>
+        <a class="btn btn-primary mb-2" asp-controller="Rookies"
+            asp-action="Export">Export data to Excel</a>
+    </div>
+</div>

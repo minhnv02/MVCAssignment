@@ -1,0 +1,5 @@
+/.vs
+MVC.Tests/bin
+MVC.Tests/obj
+MVC.WebApp/bin
+MVC.WebApp/obj

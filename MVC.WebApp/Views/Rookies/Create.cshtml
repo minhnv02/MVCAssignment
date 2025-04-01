@@ -1,0 +1,51 @@
+@model Person
+
+<form asp-action="Create" asp-controller="Rookies" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName">First Name:</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Gender">Gender:</label>
+        <select asp-for="Gender" class="form-control">
+            <option value="0">Unknown</option>
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateOfBirth">Date of Birth:</label>
+        <input asp-for="DateOfBirth" type="date" class="form-control" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Phone Number:</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BirthPlace">Place of Birth:</label>
+        <input asp-for="BirthPlace" class="form-control" />
+        <span asp-validation-for="BirthPlace" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsGraduated">Graduated:</label>
+        <input asp-for="IsGraduated" type="checkbox" />
+        <span asp-validation-for="IsGraduated" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>

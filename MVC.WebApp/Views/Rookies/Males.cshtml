@@ -1,0 +1,9 @@
+@model List<Person>
+@{
+    ViewData["Title"] = "Males";
+}
+<a class="btn btn-primary mb-2" asp-controller="Rookies" asp-action="Index">Back
+    to select option</a>
+
+<h2>Males</h2>
+<partial name="_PersonList" model=Model />

@@ -1,0 +1,34 @@
+@model Person
+@{
+    ViewData["Title"] = "Oldest";
+}
+<a class="btn btn-primary mb-2" asp-controller="Rookies" asp-action="Index">Back
+    to select option</a>
+
+<h2>Oldest</h2>
+<div class="container mt-2">
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Date Of Birth</th>
+                <th>Phone Number</th>
+                <th>Birth Place</th>
+                <th>Is Graduated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.FirstName</td>
+                <td>@Model.LastName</td>
+                <td>@Model.Gender</td>
+                <td>@Model.DateOfBirth.ToShortDateString()</td>
+                <td>@Model.PhoneNumber</td>
+                <td>@Model.BirthPlace</td>
+                <td>@(Model.IsGraduated ? "Yes" : "No")</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

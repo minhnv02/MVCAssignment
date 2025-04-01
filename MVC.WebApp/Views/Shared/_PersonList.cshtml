@@ -1,0 +1,36 @@
+@model List<Person>
+
+<div class="container mt-2">
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Date Of Birth</th>
+                <th>Phone Number</th>
+                <th>Birth Place</th>
+                <th>Is Graduated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Detail" asp-controller="Rookies"
+                            asp-route-id=@person.Id>
+                            @person.FirstName
+                        </a>
+                    </td>
+                    <td>@person.LastName</td>
+                    <td>@person.Gender</td>
+                    <td>@person.DateOfBirth.ToShortDateString()</td>
+                    <td>@person.PhoneNumber</td>
+                    <td>@person.BirthPlace</td>
+                    <td>@(person.IsGraduated ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

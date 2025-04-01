@@ -1,0 +1,48 @@
+@model Person
+
+<div class="container mt-5">
+    <h1 class="mb-4">Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Person Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">First Name:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt class="col-sm-3">Last Name:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt class="col-sm-3">Gender:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Gender)
+                </dd>
+
+                <dt class="col-sm-3">Date of Birth:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model =>
+                    model.DateOfBirth)</dd>
+
+                <dt class="col-sm-3">Phone Number:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model =>
+                    model.PhoneNumber)</dd>
+
+                <dt class="col-sm-3">Birth Place:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.BirthPlace)
+                </dd>
+
+                <dt class="col-sm-3">Is Graduated:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model =>
+                    model.IsGraduated)</dd>
+            </dl>
+            <div class="mt-4">
+                <a class="btn btn-primary" asp-action="Update"
+                    asp-route-id="@Model.Id">Update</a>
+                <a class="btn btn-danger" asp-action="Delete"
+                    asp-route-id="@Model.Id">Delete</a>
+                <a class="btn btn-secondary ms-2" asp-action="Persons">Back to
+                    List</a>
+            </div>
+        </div>
+    </div>
+</div>

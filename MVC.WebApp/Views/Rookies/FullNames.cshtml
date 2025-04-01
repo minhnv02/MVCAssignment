@@ -1,0 +1,35 @@
+@model List<Person>
+@{
+    ViewData["Title"] = "FullNames";
+}
+<a class="btn btn-primary mb-2" asp-controller="Rookies" asp-action="Index">Back
+    to select option</a>
+
+<h2>FullNames</h2>
+<div class="container mt-2">
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Date Of Birth</th>
+                <th>Phone Number</th>
+                <th>Birth Place</th>
+                <th>Is Graduated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model)
+            {
+                <tr>
+                    <td>@person.FullName</td>
+                    <td>@person.Gender</td>
+                    <td>@person.DateOfBirth.ToShortDateString()</td>
+                    <td>@person.PhoneNumber</td>
+                    <td>@person.BirthPlace</td>
+                    <td>@(person.IsGraduated ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

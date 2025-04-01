@@ -1,0 +1,32 @@
+@model int
+@{
+    ViewData["Title"] = "AroundYear";
+}
+
+<a class="btn btn-primary mb-2" asp-controller="Rookies" asp-action="Index">Back
+    to select option</a>
+
+<div class="container mb-3">
+    <h1>Enter a Year</h1>
+    <form method="get" asp-controller="Rookies" asp-action="AroundYear"
+        class="mt-2">
+        <div class="mb-3 d-flex justify-content-start align-items-center">
+            <label for="year" class="form-label">Year:</label>
+            <input type="number" id="year" name="year" value="@Model"
+                class="form-control w-50 ms-2" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@if (Model != 0)
+{
+    <h3>Before @Model</h3>
+    <partial name="_PersonList" model=ViewBag.Before />
+
+    <h3>In @Model</h3>
+    <partial name="_PersonList" model=ViewBag.InYear />
+
+    <h3>After @Model</h3>
+    <partial name="_PersonList" model=ViewBag.After />
+}
