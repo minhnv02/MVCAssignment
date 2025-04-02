@@ -8,5 +8,9 @@ namespace MVC.WebApp.Repositories
         void Update(Person person);
         void Delete(Guid id);
         List<Person> GetAll();
+        List<Person> Males();
+        Person Oldest();
+        List<Person> AroundYear(int year);
+        MemoryStream ExportToExcel();
     }
 }

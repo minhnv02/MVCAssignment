@@ -1,6 +1,7 @@
 using System.Globalization;
 using CsvHelper;
 using MVC.WebApp.Models;
+using OfficeOpenXml;
 
 namespace MVC.WebApp.Repositories
 {
@@ -89,6 +90,50 @@ namespace MVC.WebApp.Repositories
             personToUpdate.BirthPlace = person.BirthPlace;
             personToUpdate.IsGraduated = person.IsGraduated;
             SavePersonsToCsv();
+        }
+
+        public List<Person> Males()
+        {
+            return _people.Where(p => p.Gender == GenderType.Male).ToList();
+        }
+
+        public Person Oldest()
+        {
+            return _people.OrderBy(p => p.DateOfBirth.Year).DefaultIfEmpty(new Person()).First();
+        }
+
+        public List<Person> AroundYear(int year)
+        {
+            if (year < 0)
+            {
+                throw new ArgumentException("Year must be a positive number.");
+            }
+
+            var before = _people.Where(p => p.DateOfBirth.Year < year).ToList();
+            var inYear = _people.Where(p => p.DateOfBirth.Year == year).ToList();
+            var after = _people.Where(p => p.DateOfBirth.Year > year).ToList();
+
+            return before.Concat(inYear).Concat(after).ToList();
+        }
+
+        public MemoryStream ExportToExcel()
+        {
+            var stream = new MemoryStream();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage(stream);
+            var worksheet = package.Workbook.Worksheets.Add("Persons");
+
+            worksheet.Cells.LoadFromCollection(_people, true);
+
+            // Change format of date column (assuming DateOfBirth is the 4th column)
+            if (worksheet.Dimension != null && worksheet.Dimension.Columns >= 4)
+            {
+                worksheet.Column(4).Style.Numberformat.Format = "dd/mm/yyyy";
+            }
+
+            package.Save();
+            stream.Position = 0;
+            return stream;
         }
     }
 }

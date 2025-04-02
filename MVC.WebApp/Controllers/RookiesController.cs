@@ -19,24 +19,41 @@ namespace MVC.WebApp.Controllers
         }
         public IActionResult Index() => View();
 
-        public IActionResult Persons() => View(_people);
+        public IActionResult Persons() => View(_personRepository.GetAll());
 
-        public IActionResult Males() => View(_people.Where(p => p.Gender == GenderType.Male).ToList());
+        public IActionResult Males() => View(_personRepository.Males());
 
-        public IActionResult Oldest() => View(_people.OrderBy(p => p.DateOfBirth.Year).FirstOrDefault());
+        public IActionResult Oldest() => View(_personRepository.Oldest());
 
         public IActionResult FullNames() => View(_people);
         public IActionResult AroundYear(int year = 0)
         {
+            if (year < 0)
+            {
+                return RedirectToAction("AroundYear");
+            }
+
+            List<Person> peopleAroundYear;
             if (year != 0)
             {
-                var before = _people.Where(p => p.DateOfBirth.Year < year).ToList();
-                var inYear = _people.Where(p => p.DateOfBirth.Year == year).ToList();
-                var after = _people.Where(p => p.DateOfBirth.Year > year).ToList();
+                peopleAroundYear = _personRepository.AroundYear(year);
+            }
+            else
+            {
+                peopleAroundYear = _personRepository.GetAll(); 
+            }
 
-                ViewBag.Before = before;
-                ViewBag.InYear = inYear;
-                ViewBag.After = after;
+            if (year != 0)
+            {
+                ViewBag.Before = peopleAroundYear.Where(p => p.DateOfBirth.Year < year).ToList();
+                ViewBag.InYear = peopleAroundYear.Where(p => p.DateOfBirth.Year == year).ToList();
+                ViewBag.After = peopleAroundYear.Where(p => p.DateOfBirth.Year > year).ToList();
+            }
+            else
+            {
+                ViewBag.Before = new List<Person>();
+                ViewBag.InYear = new List<Person>();
+                ViewBag.After = new List<Person>();
             }
 
             return View(year);
@@ -44,18 +61,7 @@ namespace MVC.WebApp.Controllers
 
         public IActionResult Export()
         {
-            var stream = new MemoryStream();
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using var package = new ExcelPackage(stream);
-            var worksheet = package.Workbook.Worksheets.Add("Persons");
-
-            worksheet.Cells.LoadFromCollection(_people, true);
-
-            // Change format of date column
-            worksheet.Column(4).Style.Numberformat.Format = "dd/mm/yyyy";
-            package.Save();
-
-            stream.Position = 0;
+            var stream = _personRepository.ExportToExcel();
             string excelFileName = $"Persons_{DateTime.Now:yyyyMMdd}.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
         }
@@ -112,11 +118,11 @@ namespace MVC.WebApp.Controllers
         [HttpPost]
         public IActionResult DeleteConfirmed(Guid id)
         {
-            var fullName = _people.FirstOrDefault(p => p.Id == id).FullName;
+            var fullName = _people.FirstOrDefault(p => p.Id == id)?.FullName ?? string.Empty;
             _personRepository.Delete(id);
             return View("DeleteSuccess", fullName);
         }
-
+        [HttpDelete]
         public IActionResult DeleteSuccess(string fullName)
         {
             return View(fullName);
