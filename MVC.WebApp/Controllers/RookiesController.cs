@@ -26,6 +26,38 @@ namespace MVC.WebApp.Controllers
         public IActionResult Oldest() => View(_personRepository.Oldest());
 
         public IActionResult FullNames() => View(_people);
+        //public IActionResult AroundYear(int year = 0)
+        //{
+        //    if (year < 0)
+        //    {
+        //        return RedirectToAction("AroundYear");
+        //    }
+
+        //    List<Person> peopleAroundYear;
+        //    if (year != 0)
+        //    {
+        //        peopleAroundYear = _personRepository.AroundYear(year);
+        //    }
+        //    else
+        //    {
+        //        peopleAroundYear = _personRepository.GetAll(); 
+        //    }
+
+        //    if (year != 0)
+        //    {
+        //        ViewBag.Before = peopleAroundYear.Where(p => p.DateOfBirth.Year < year).ToList();
+        //        ViewBag.InYear = peopleAroundYear.Where(p => p.DateOfBirth.Year == year).ToList();
+        //        ViewBag.After = peopleAroundYear.Where(p => p.DateOfBirth.Year > year).ToList();
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Before = new List<Person>();
+        //        ViewBag.InYear = new List<Person>();
+        //        ViewBag.After = new List<Person>();
+        //    }
+
+        //    return View(year);
+        //}
         public IActionResult AroundYear(int year = 0)
         {
             if (year < 0)
@@ -33,30 +65,39 @@ namespace MVC.WebApp.Controllers
                 return RedirectToAction("AroundYear");
             }
 
-            List<Person> peopleAroundYear;
-            if (year != 0)
-            {
-                peopleAroundYear = _personRepository.AroundYear(year);
-            }
-            else
-            {
-                peopleAroundYear = _personRepository.GetAll(); 
-            }
+            List<Person> peopleAroundYear = GetPeopleAroundYear(year);
 
             if (year != 0)
             {
-                ViewBag.Before = peopleAroundYear.Where(p => p.DateOfBirth.Year < year).ToList();
-                ViewBag.InYear = peopleAroundYear.Where(p => p.DateOfBirth.Year == year).ToList();
-                ViewBag.After = peopleAroundYear.Where(p => p.DateOfBirth.Year > year).ToList();
+                PopulateViewBagWithFilteredData(peopleAroundYear, year);
             }
             else
             {
-                ViewBag.Before = new List<Person>();
-                ViewBag.InYear = new List<Person>();
-                ViewBag.After = new List<Person>();
+                SetEmptyViewBags();
             }
 
             return View(year);
+        }
+
+        private List<Person> GetPeopleAroundYear(int year)
+        {
+            return year != 0
+                ? _personRepository.AroundYear(year)
+                : _personRepository.GetAll();
+        }
+
+        private void PopulateViewBagWithFilteredData(List<Person> people, int year)
+        {
+            ViewBag.Before = people.Where(p => p.DateOfBirth.Year < year).ToList();
+            ViewBag.InYear = people.Where(p => p.DateOfBirth.Year == year).ToList();
+            ViewBag.After = people.Where(p => p.DateOfBirth.Year > year).ToList();
+        }
+
+        private void SetEmptyViewBags()
+        {
+            ViewBag.Before = new List<Person>();
+            ViewBag.InYear = new List<Person>();
+            ViewBag.After = new List<Person>();
         }
 
         public IActionResult Export()
