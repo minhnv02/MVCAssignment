@@ -137,17 +137,6 @@ namespace MVC.Tests
             Assert.That(model.Count(), Is.EqualTo(_people.Count()));
         }
 
-        //[TestCase(1995)]
-        //[TestCase(2000)]
-        //[TestCase(2005)]
-        //public void AroundYear_ReturnsViewResultWithPeopleGroupedByYear(int year)
-        //{
-        //    // Act
-        //    var result = _controller.AroundYear(year);
-
-        //    // Assert
-
-        //}
         [Test]
         public void AroundYear_WithNegativeYear_ShouldRedirectToSameActionWithoutParameters()
         {
@@ -195,47 +184,7 @@ namespace MVC.Tests
             _personRepositoryMock.Verify(repo => repo.GetAll(), Times.Exactly(2));
             _personRepositoryMock.Verify(repo => repo.AroundYear(It.IsAny<int>()), Times.Never);
         }
-        //[Test]
-        //public void AroundYear_WithValidYear_ShouldReturnFilteredPeopleInViewBags()
-        //{
-        //    // Arrange
-        //    int year = 1990;
-        //    var peopleAroundYear = _people.Where(p => p.DateOfBirth.Year >= year - 1 && p.DateOfBirth.Year <= year + 1).ToList();
-
-        //    // Act
-        //    var result = _controller.AroundYear(year);
-
-        //    // Assert
-        //    Assert.IsInstanceOf<ViewResult>(result);
-        //    var viewResult = result as ViewResult;
-        //    Assert.That(viewResult, Is.Not.Null);
-        //    Assert.That(viewResult.Model, Is.EqualTo(year));
-
-        //    var before = _controller.ViewBag.Before as List<Person>;
-        //    var inYear = _controller.ViewBag.InYear as List<Person>;
-        //    var after = _controller.ViewBag.After as List<Person>;
-
-        //    // People born before 1990
-        //    Assert.That(before, Is.Not.Null);
-        //    Assert.That(before.Count, Is.EqualTo(1));
-        //    Assert.That(before[0].FirstName, Is.EqualTo("Jane"));
-
-        //    // People born in 1990
-        //    Assert.That(inYear, Is.Not.Null);
-        //    Assert.That(inYear.Count, Is.EqualTo(2));
-        //    Assert.IsTrue(inYear.Any(p => p.FirstName == "John"));
-        //    Assert.IsTrue(inYear.Any(p => p.FirstName == "Bob"));
-
-        //    // People born after 1990
-        //    Assert.That(after, Is.Not.Null);
-        //    Assert.That(after.Count, Is.EqualTo(1));
-        //    Assert.That(after[0].FirstName, Is.EqualTo("Alice"));
-
-        //    // Verify repository calls
-        //    _personRepositoryMock.Verify(repo => repo.AroundYear(year), Times.Once);
-        //    _personRepositoryMock.Verify(repo => repo.GetAll(), Times.Exactly(2));
-        //}
-
+        
         [Test]
         public void Export_ReturnsFileContentResult()
         {
@@ -273,7 +222,6 @@ namespace MVC.Tests
 
             // Assert
             _personRepositoryMock.Verify(repo => repo.Create(It.IsAny<Person>()), Times.Once);
-            //_personRepositoryMock.Verify(repo => repo.Create(newPerson), Times.Once);
             Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
             var redirectResult = result as RedirectToActionResult;
             Assert.That(redirectResult, Is.Not.Null);
@@ -335,7 +283,6 @@ namespace MVC.Tests
             // Assert
             _personRepositoryMock.Verify(repo => repo.Update(personToUpdate), Times.Once);
             Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-            //Assert.AreEqual("Persons", (result as RedirectToActionResult).ActionName);
             Assert.That(result as RedirectToActionResult, Is.Not.Null);
             Assert.That((result as RedirectToActionResult).ActionName, Is.EqualTo("Persons"));
         }
@@ -371,7 +318,6 @@ namespace MVC.Tests
             Assert.That(viewResult, Is.Not.Null);
             Assert.IsAssignableFrom<Guid>(viewResult.ViewData.Model);
             var model = viewResult.ViewData.Model;
-            //Assert.AreEqual(personId, model);
             Assert.That(model, Is.EqualTo(personId));
         }
 
@@ -410,7 +356,6 @@ namespace MVC.Tests
             Assert.That(viewResult, Is.Not.Null);
             Assert.IsAssignableFrom<Person>(viewResult.ViewData.Model);
             var model = viewResult.ViewData.Model;
-            //Assert.AreEqual(_people.First(p => p.Id == personId), model);
             Assert.That(model, Is.EqualTo(_people.First(p => p.Id == personId)));
         }
     }

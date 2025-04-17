@@ -102,7 +102,6 @@ namespace MVC.Tests
             var result = _repository.GetAll();
 
             // Assert
-            //Assert.AreEqual(_testData.Count + 1, result.Count);
             Assert.That(result.Count, Is.EqualTo(_testData.Count + 1));
         }
 
@@ -119,7 +118,7 @@ namespace MVC.Tests
             var result = people.Where(p => p.Id == personToUpdate.Id).FirstOrDefault();
 
             // Assert
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(personToUpdate.FirstName, Is.EqualTo(result.FirstName));
         }
 
@@ -134,7 +133,6 @@ namespace MVC.Tests
             var result = _repository.GetAll();
 
             // Assert
-            //Assert.AreEqual(_testData.Count - 1, result.Count);
             Assert.That(result.Count, Is.EqualTo(_testData.Count - 1));
         }
     }
